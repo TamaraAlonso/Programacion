@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ariketa51;
 
-import static java.awt.SystemColor.menu;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import Excepciones.*;
@@ -14,6 +9,7 @@ import Excepciones.*;
 public class Ariketa51 {
 
    static ArrayList <Double> menu = new ArrayList ();
+   static int sumaTotal = 0;
    
     public static void main(String[] args) {
         
@@ -31,42 +27,45 @@ public class Ariketa51 {
         10. Finalizar.
         */
         
-        
+       pedirDatos(); 
   
-       char opc=' ';
+       int opc = 0;
        do
        {
            try
            {
                opc = mostrarMenu();
                switch(opc){
-                   case '1':
+                   case 1:
                        funcionMaxMin();
                        break;
-                   case '2':
+                   case 2:
                        funcionNumeroEncontrado();
                        break;
-                   case '3':
+                   case 3:
                        funcionNumeroBorrado();
                        break;
-                   case '4':
+                   case 4:
                        funcionArray();
                        break;
-                   case '5':
+                   case 5:
                        funcionElementosContenidos();
                        break;
-                   case '6':
+                   case 6:
                        funcionElementoFinal();
                        break;
-                   case '7':
+                   case 7:
                        funcionElementoEnPosicion();
                        break;
-                   case '8':
+                   case 8:
                        funcionPosicionConcreta();
                        break;
-                   case '9':
+                   case 9:
                        funcionMediaNum();
                        break;
+                   case 10:
+                        JOptionPane.showMessageDialog(null, "Gracias por participar");
+                        break;
                }
            }
            catch(OpcionNoValida e)
@@ -92,12 +91,28 @@ public class Ariketa51 {
                JOptionPane.showMessageDialog(null,"Problemas " + e.getClass() + e.getMessage());
            } 
        }
-       while(opc != '5');
+       while(opc != 10);
     }
+   
+   public static void pedirDatos (){
+       
+       String continuar;       
+       do {
+       
+       Double numero = Double.parseDouble(JOptionPane.showInputDialog("Introduce un número"));       
+       menu.add(numero);
+       
+       continuar = JOptionPane.showInputDialog("¿Quieres continuar introduciendo datos? s/n");
+              
+        }
+       
+       while ("s".equalsIgnoreCase(continuar));
     
-   public static char mostrarMenu() throws Exception
+   }
+   
+   public static int mostrarMenu() throws Exception
     {
-         char opc =  JOptionPane.showInputDialog("1.- Visualizar el valor máximo y mínimo \n"
+         int opc =  Integer.parseInt(JOptionPane.showInputDialog("1.- Visualizar el valor máximo y mínimo \n"
                 + "2.- Solicitar un número y buscarlo \n"
                 + "3.- Solicitar un número, buscarlo y borrarlo \n"
                 + "4.- Convertir el arrayList en un array \n"
@@ -107,8 +122,8 @@ public class Ariketa51 {
                 + "8.- Borrar un elemento de una posición concreta \n"
                 + "9.- Calcular la suma y la media aritmética de los valores contenidos \n"
                 + "10.- Salir del programa\n\n"
-                + "Elige una opción").charAt(0);
-        if (opc < '1' || opc > '5')
+                + "Elige una opción"));
+        if (opc < 1 || opc > 10)
             throw new OpcionNoValida();
         return opc;
                 
@@ -120,16 +135,18 @@ public class Ariketa51 {
     }
     
     public static void funcionMaxMin() throws Exception {
-        double numMax = 0;
-        double numMin = 0;   
+       
+       
+        double numMax = 0;            
+        double numMin = 999;   
         
-        for (int i = 0; i < menu.size(); i++) {
+        for (int i = 1; i < menu.size(); i++) {
                         
-            if (i < numMin){
+            if (menu.get(i) < numMin){
                 numMin = i;
             }
             else {
-                if (i > numMax) {
+                if (menu.get(i) > numMax) {
                     numMax = i;
                 }
             }
@@ -139,26 +156,27 @@ public class Ariketa51 {
     
     public static void funcionNumeroEncontrado() throws Exception {
         
-        int numero = Integer.parseInt(JOptionPane.showInputDialog("Introduce el número que deseas buscar "));
+        Double num = Double.parseDouble(JOptionPane.showInputDialog("Introduce el número que deseas buscar "));
         
-        if (menu.contains(numero)) {
-            JOptionPane.showMessageDialog(null, "El número introducido " + numero + "se encuentra dentro del menú");
+        if (menu.contains(num)) {
+            JOptionPane.showMessageDialog(null, "El número introducido " + num + " se encuentra dentro del menú");
         }
         else {
-            JOptionPane.showMessageDialog(null, "El número introducido " + numero + " no se encuentra dentro del menú");
+            JOptionPane.showMessageDialog(null, "El número introducido " + num+ " no se encuentra dentro del menú");
         }
     
     }
     
     public static void funcionNumeroBorrado() throws Exception {
       
-        int numero = Integer.parseInt(JOptionPane.showInputDialog("Introduce el número que deseas buscar "));
+        Double numBorrado = Double.parseDouble(JOptionPane.showInputDialog("Introduce el número que deseas buscar"));
         
-        if (menu.contains(numero)) {
-            if (menu.remove())
+        if (menu.contains(numBorrado)) {
+            menu.remove(numBorrado);
+            JOptionPane.showMessageDialog(null, "El número ha sido borrado");
         }
         else {
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Error, el número no ha sido introducido correctamente");
         }
         
     }
@@ -176,37 +194,67 @@ public class Ariketa51 {
         }
         else {
             if (menu.size()!= 0){
-               JOptionPane.showMessageDialog(null, "El array no se encuentra vacío");
+               JOptionPane.showMessageDialog(null, "El contenido del menú es " + menu);
             }
         }
     }
     
     public static void funcionElementoFinal() throws Exception {
         
-        double numeroFinal = Integer.parseInt("Introduce el número que quieres colocar al final");
+        JOptionPane.showMessageDialog(null, "El menú se encuentra de la siguiente manera: " + menu);
         
-        menu.add(numeroFinal);
+        double numeroFinal = Integer.parseInt(JOptionPane.showInputDialog("Introduce un número para ponerlo al final"));
+        
+        menu.add(numeroFinal);      
         
         JOptionPane.showMessageDialog(null, "La lista se queda de la siguiente manera " + menu);
+    
     }
     
     public static void funcionElementoEnPosicion() throws Exception {
         
-        int numero = Integer.parseInt("Introduce un número");
-        double posicion = Double.parseDouble("Introduce la posición en la que lo quieres colocar");
+        JOptionPane.showMessageDialog(null, "El menú se encuentra de la siguiente manera: " + menu);
+        
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Introduce un número"));
+        
+        double posicion = Integer.parseInt(JOptionPane.showInputDialog("Introduce la posición en la que lo quieres colocar"));
         
         menu.set(numero, posicion);
+        
+        JOptionPane.showMessageDialog(null, "El menú se encuentra de la siguiente manera " + menu);
     }
     
     public static void  funcionPosicionConcreta() throws Exception {
+       
+       JOptionPane.showMessageDialog(null, "El menú se encuentra de la siguiente manera: " + menu); 
         
-        int posicion = Integer.parseInt("Introduce la posición del número que quieres eliminar");
+       int posicion = Integer.parseInt(JOptionPane.showInputDialog("Introduce la posición del número que quieres eliminar"));
         
-        menu.remove(posicion);
+       Double remove;
+       remove = menu.remove(posicion);
+       
+       JOptionPane.showMessageDialog(null, "El menú tras eliminar eliminar el número "+ remove + " se encuentra de la siguiente manera " + menu);
     }
     
     public static void funcionMediaNum() throws Exception {
         
+        double suma = 0;
+        for (int i=0; i < menu.size(); i++) {
+            double valor = 0;
+
+            try {
+                valor = menu.get(i);
+            }
+            catch (NumberFormatException e) {
+                valor = 0;
+            }
+            
+            suma += valor;
+        }
         
+        double numeroDefinitivo = menu.set(sumaTotal, suma);
+        
+        JOptionPane.showMessageDialog(null, "La media de los números es " + numeroDefinitivo);
     }
+    
 }
