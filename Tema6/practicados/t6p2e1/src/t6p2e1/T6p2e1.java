@@ -27,7 +27,7 @@ que m´as pel´ıculas ha producido.*/
      
      pedirDatos();
      peliculaLarga();
-    
+    cantidadPelis();
     } 
     
      public static void pedirDatos (){
@@ -67,5 +67,20 @@ que m´as pel´ıculas ha producido.*/
          JOptionPane.showMessageDialog(null, peliculaMayor);
      }
       
-    
+    public static void cantidadPelis (){
+        
+        String seguir=null;
+        int peli = 0;
+        do {
+       
+         int numPelis = Integer.parseInt(JOptionPane.showInputDialog("Introduce el número de películas producidas"));
+         for (int i=0; i<numPelis.length();i++) {
+             if (numPelis[i] > peli) {
+                 peli=numPelis [i];
+             }
+         }
+       }              
+       while ("s".equalsIgnoreCase(seguir));
+      }
+    }
 }
