@@ -1,0 +1,30 @@
+PARA EL ALTA
+
+VENTANA
+	bAceptarActionPerformed
+		if(datosCorrectos()) --validar
+			Controlador.tenDatos(cajaUno.getText()..) --pasamos datos a la controladora
+
+CONTROLADOR
+
+	tenDatos (String n, ...)
+	objeto= new Clase (n,...)
+	bdTablaUno.insertar(objeto); --meterlo en la tabla de la BD que corresponda
+
+BDTABLAUNO
+
+	insertar (objeto)
+	
+	abrir la conexión de la BD --si no lo hemos hehco antes
+		-1) libreria
+		-2) Class.forName --driver
+		-3) DriveManager.getConnection
+
+	statement --select * from tabla (no tiene parámetros)
+	preparedStatement -- select * from tabla where .. (tiene parámetros -?-)
+
+	execute 
+		-query (es una select) me devuelve un resultSet --> new (crear los objetos que se crean en la BD)
+		-update (resto) y deberíamos controlar el nº de filas que han sido ejecutadas
+
+	cerrar conexión
